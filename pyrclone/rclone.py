@@ -58,6 +58,10 @@ class Rclone:
         sub_cmd = f"move --files-from '{files_from}' '{source}' '{dest}' -v --transfers {transfers}"
         self.run(sub_cmd)
 
+    def sync(self, source, dest, transfers=4):
+        sub_cmd = f"sync '{source}' '{dest}' -v --transfers {transfers}"
+        self.run(sub_cmd)
+
     def run(self, sub_cmd):
         """run rclone command"""
         assert sub_cmd and isinstance(sub_cmd, str), "Command cannot be None"
