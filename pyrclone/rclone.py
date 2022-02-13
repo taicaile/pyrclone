@@ -78,11 +78,8 @@ class Rclone:
             text=True,
             preexec_fn=preexec_function if self.non_interruptable else None,
         ) as proc:
-            outs, errs = proc.communicate()
+            for stdout_line in iter(proc.stdout.readline, ""):
+                logger.info(stdout_line.strip("\n").strip())
             ret_code = proc.wait()
-            if outs:
-                logger.info("\n%s", outs)
-            if errs:
-                logger.error(errs)
             if ret_code:
-                raise subprocess.CalledProcessError(ret_code, proc.args, outs, errs)
+                raise subprocess.CalledProcessError(ret_code, proc.args)
