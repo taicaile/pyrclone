@@ -20,10 +20,11 @@ class Rclone:
     def __init__(self, cfg_file=None, non_interruptable=True) -> None:
         """__init__"""
         self.non_interruptable = non_interruptable
-        self.cmd = "rclone"
-        if cfg_file:
+        if cfg_file is None:
+            self.cmd = "rclone"
+        else:
             assert os.path.exists(cfg_file), f"{cfg_file} file not found"
-            self.cmd += f" --config '{os.path.abspath(cfg_file)}' "
+            self.cmd = f"rclone --config '{os.path.abspath(cfg_file)}'"
         self.listremotes()
 
     def listremotes(self):
@@ -66,7 +67,7 @@ class Rclone:
         """run rclone command"""
         assert sub_cmd and isinstance(sub_cmd, str), "Command cannot be None"
 
-        shell_cmd = self.cmd + sub_cmd
+        shell_cmd = self.cmd + " " + sub_cmd
         logger.debug(shell_cmd)
         # pylint: disable=subprocess-popen-preexec-fn
         with subprocess.Popen(
