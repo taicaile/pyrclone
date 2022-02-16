@@ -21,7 +21,7 @@ def read_requirements(filename):
 
 setup(
     name="pyrclone",
-    version="0.2.0",
+    version="0.2.1",
     description="Python wrapper for Rclone",
     long_description=read_file("README.md"),
     author="taicaile",

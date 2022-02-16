@@ -80,7 +80,7 @@ class Rclone:
             preexec_fn=preexec_function if self.non_interruptable else None,
         ) as proc:
             for stdout_line in iter(proc.stdout.readline, ""):
-                logger.info(stdout_line.strip("\n").strip())
+                print(stdout_line.strip("\n").strip())
             ret_code = proc.wait()
             if ret_code:
                 raise subprocess.CalledProcessError(ret_code, proc.args)
